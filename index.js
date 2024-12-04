@@ -30,10 +30,17 @@ async function run() {
 
     const movieCollection = client.db("movieDB").collection("movies");
 
-    // post movie in db
+    // create movie in db
     app.post('/movies', async (req, res) => {
       const movies = req.body;
       const result = await movieCollection.insertOne(movies);
+      res.send(result);
+    })
+
+    // read movie from db
+    app.get("/movies", async (req, res) => {
+      const cursor = movieCollection.find();
+      const result = await cursor.toArray();
       res.send(result);
     })
 
