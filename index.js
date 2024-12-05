@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 5000;
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config();
 
 // middelware
@@ -42,6 +42,14 @@ async function run() {
       const cursor = movieCollection.find();
       const result = await cursor.toArray();
       res.send(result);
+    })
+
+    //read one specific data
+    app.get('/movies/:id', async(req, res)=>{
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id)};
+      const movie = await movieCollection.findOne(query);
+      res.send(movie)
     })
 
 
