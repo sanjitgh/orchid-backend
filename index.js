@@ -52,6 +52,14 @@ async function run() {
       res.send(movie)
     })
 
+    // delete single data form db
+    app.delete('/movies/:id', async(req, res) => {
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)};
+      const movie = await movieCollection.deleteOne(query);
+      res.send(movie);
+    })
+
 
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
