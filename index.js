@@ -29,11 +29,19 @@ async function run() {
   try {
 
     const movieCollection = client.db("movieDB").collection("movies");
+    const userCollection = client.db("movieDB").collection("users");
 
     // create movie in db
     app.post('/movies', async (req, res) => {
       const movies = req.body;
       const result = await movieCollection.insertOne(movies);
+      res.send(result);
+    })
+
+    //create user in db
+    app.post('/users', async (req, res) => {
+      const newUser = req.body;
+      const result = await userCollection.insertOne(newUser);
       res.send(result);
     })
 
@@ -45,17 +53,17 @@ async function run() {
     })
 
     //read one specific data
-    app.get('/movies/:id', async(req, res)=>{
+    app.get('/movies/:id', async (req, res) => {
       const id = req.params.id;
-      const query = { _id: new ObjectId(id)};
+      const query = { _id: new ObjectId(id) };
       const movie = await movieCollection.findOne(query);
       res.send(movie)
     })
 
     // delete single data form db
-    app.delete('/movies/:id', async(req, res) => {
+    app.delete('/movies/:id', async (req, res) => {
       const id = req.params.id;
-      const query = {_id: new ObjectId(id)};
+      const query = { _id: new ObjectId(id) };
       const movie = await movieCollection.deleteOne(query);
       res.send(movie);
     })
