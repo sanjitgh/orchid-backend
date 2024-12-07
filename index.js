@@ -48,9 +48,12 @@ async function run() {
 
 
     // read favorite movie from db
-    app.get("/favoritemovie", async (req, res) => {
-      const cursor = favoriteMovieCollection.find();
-      const result = await cursor.toArray();
+    app.get("/favoritemovie/:email", async (req, res) => {
+
+      const query = { currentUserEmail : req.params.email }
+
+      const result = await favoriteMovieCollection.find(query).toArray();
+
       res.send(result);
     })
 
@@ -108,6 +111,14 @@ async function run() {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const movie = await movieCollection.deleteOne(query);
+      res.send(movie);
+    })
+
+    // delete favorite single data form db
+    app.delete('/favoritemovie/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const movie = await favoriteMovieCollection.deleteOne(query);
       res.send(movie);
     })
 
