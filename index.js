@@ -49,11 +49,8 @@ async function run() {
 
     // read favorite movie from db
     app.get("/favoritemovie/:email", async (req, res) => {
-
       const query = { currentUserEmail : req.params.email }
-
       const result = await favoriteMovieCollection.find(query).toArray();
-
       res.send(result);
     })
 
