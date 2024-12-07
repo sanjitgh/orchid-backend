@@ -11,9 +11,6 @@ app.use(express.json())
 
 
 
-// const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.bdxj8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
-
-
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@ph10.ehebq.mongodb.net/?retryWrites=true&w=majority&appName=ph10`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -49,7 +46,7 @@ async function run() {
 
     // read favorite movie from db
     app.get("/favoritemovie/:email", async (req, res) => {
-      const query = { currentUserEmail : req.params.email }
+      const query = { currentUserEmail: req.params.email }
       const result = await favoriteMovieCollection.find(query).toArray();
       res.send(result);
     })
@@ -119,8 +116,6 @@ async function run() {
       res.send(movie);
     })
 
-
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();
